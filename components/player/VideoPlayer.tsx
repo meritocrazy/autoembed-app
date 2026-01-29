@@ -125,12 +125,12 @@ export function WatchPage({ mediaType, tmdbId, season, episode }: WatchPageProps
           <p className="mt-2">
             This player is powered by{' '}
             <a
-              href="https://autoembed.cc"
+              href="https://vidfast.pro"
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent hover:underline"
             >
-              AutoEmbed
+              VidFast
             </a>
           </p>
         </div>

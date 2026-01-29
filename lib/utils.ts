@@ -43,10 +43,16 @@ export function getEmbedURL(
     throw new Error(`Invalid server: ${server}. Must be 1, 2, or 3`)
   }
 
-  const baseURL = 'https://player.autoembed.cc/embed'
+  const serverMap: Record<number, string> = {
+    1: 'Alpha',
+    2: 'Cobra',
+    3: 'Delta'
+  }
+  
+  const serverName = serverMap[server]
   
   if (mediaType === 'movie') {
-    return `${baseURL}/movie/${tmdbId}?server=${server}`
+    return `https://vidfast.pro/movie/${tmdbId}?server=${serverName}&autoPlay=true`
   } else {
     if (season === undefined || episode === undefined) {
       throw new Error('Season and episode numbers are required for TV shows')
@@ -58,7 +64,7 @@ export function getEmbedURL(
     if (!Number.isInteger(episode) || episode <= 0) {
       throw new Error(`Invalid episode number: ${episode}`)
     }
-    return `${baseURL}/tv/${tmdbId}/${season}/${episode}?server=${server}`
+    return `https://vidfast.pro/tv/${tmdbId}/${season}/${episode}?server=${serverName}&autoPlay=true`
   }
 }
 
