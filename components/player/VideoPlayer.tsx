@@ -42,14 +42,23 @@ export function WatchPage({ mediaType, tmdbId, season, episode }: WatchPageProps
     trackView()
   }, [user, tmdbId, mediaType, season, episode, addToHistory])
 
-  let embedUrl: string | null = null
-  try {
-    embedUrl = getEmbedURL(mediaType, tmdbId, season, episode, server)
-    setEmbedError(null)
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Failed to load video'
-    setEmbedError(message)
-  }
+  useEffect(() => {
+    try {
+      const url = getEmbedURL(mediaType, tmdbId, season, episode, server)
+      setEmbedError(null)
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to load video'
+      setEmbedError(message)
+    }
+  }, [mediaType, tmdbId, season, episode, server])
+
+  const embedUrl = (() => {
+    try {
+      return getEmbedURL(mediaType, tmdbId, season, episode, server)
+    } catch {
+      return null
+    }
+  })()
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-black">
