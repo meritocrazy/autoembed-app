@@ -18,7 +18,7 @@ export default function WatchlistPage() {
         <div className="text-center">
           <Heart className="h-16 w-16 mx-auto mb-4 text-muted" />
           <h1 className="text-2xl font-bold mb-4">Sign in to view your watchlist</h1>
-          <Link href="/login">
+          <Link href="/auth-login">
             <Button>Sign In</Button>
           </Link>
         </div>

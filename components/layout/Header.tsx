@@ -78,10 +78,10 @@ export function Header() {
               </div>
             ) : (
               <div className="flex items-center gap-4">
-                <Link href="/login">
+                <Link href="/auth-login">
                   <Button variant="ghost">Sign In</Button>
                 </Link>
-                <Link href="/signup">
+                <Link href="/auth-signup">
                   <Button>Sign Up</Button>
                 </Link>
               </div>
