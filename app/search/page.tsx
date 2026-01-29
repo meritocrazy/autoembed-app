@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { tmdbAPI } from '@/lib/tmdb/client'
@@ -16,7 +16,7 @@ const SEARCH_PATTERN = /^[a-zA-Z0-9\s\-&':]*$/
 
 export default function SearchPage() {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<(TMDBMovie | TMDBtv)[]>([])
+  const [results, setResults] = useState<(TMDBMovie | TMDBV)[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [mediaType, setMediaType] = useState<'all' | 'movie' | 'tv'>('all')
@@ -75,10 +75,10 @@ export default function SearchPage() {
       }
 
       const filteredResults = (data.results || []).filter(
-        (item): item is (TMDBMovie | TMDBV) => item.media_type === 'movie' || item.media_type === 'tv'
+        (item): item is (TMDBMovie | TMDBV) => 'media_type' in item && ((item as any).media_type === 'movie' || (item as any).media_type === 'tv')
       )
 
-      setResults(filteredResults)
+      setResults(filteredResults as (TMDBMovie | TMDBV)[])
     } catch (error) {
       console.error('Search error:', error)
       setError(error instanceof Error ? error.message : 'Search failed. Please try again.')
@@ -168,7 +168,7 @@ export default function SearchPage() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {results.map((item) => (
-              <div key={`${item.media_type}-${item.id}`}>
+              <div key={item.id}>
                 {isMovie(item) ? (
                   <MovieCard movie={item} />
                 ) : isTV(item) ? (
@@ -192,55 +192,4 @@ export default function SearchPage() {
     </div>
   )
 }
-      </div>
 
-      {loading && (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-muted" />
-        </div>
-      )}
-
-      {error && (
-        <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600 mb-6">
-          <AlertCircle className="h-5 w-5 flex-shrink-0" />
-          <p>{error}</p>
-        </div>
-      )}
-
-      {!loading && query && results.length === 0 && !error && (
-        <div className="text-center py-12">
-          <p className="text-muted">No results found for &quot;{query}&quot;</p>
-        </div>
-      )}
-
-      {!loading && results.length > 0 && (
-        <>
-          <p className="text-muted mb-6">
-            {results.length} result{results.length !== 1 ? 's' : ''} for &quot;{query}&quot;
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {results.map((item) => (
-              <div key={`${item.media_type}-${item.id}`}>
-                {isMovie(item) ? (
-                  <MovieCard movie={item} />
-                ) : isTV(item) ? (
-                  <TVCard tv={item} />
-                ) : null}
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      {!query && (
-        <div className="text-center py-12">
-          <SearchIcon className="h-16 w-16 mx-auto mb-4 text-muted" />
-          <h2 className="text-xl font-semibold mb-2">Start searching</h2>
-          <p className="text-muted">
-            Enter a movie or TV show title in the search box above
-          </p>
-        </div>
-      )}
-    </div>
-  )
-}

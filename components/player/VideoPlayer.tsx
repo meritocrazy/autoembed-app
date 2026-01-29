@@ -129,28 +129,3 @@ export function WatchPage({ mediaType, tmdbId, season, episode }: WatchPageProps
     </div>
   )
 }
-              }`}
-            >
-              Server {s}
-            </button>
-          ))}
-        </div>
-
-        <div className="max-w-6xl mx-auto mt-8 text-center text-sm text-muted">
-          <p>If the video doesn't load, try switching servers using the buttons above.</p>
-          <p className="mt-2">
-            This player is powered by{' '}
-            <a
-              href="https://autoembed.cc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent hover:underline"
-            >
-              AutoEmbed
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}

@@ -99,7 +99,7 @@ export default async function TVPage({ params }: { params: Promise<{ id: string 
               {tv.first_air_date && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-5 w-5" />
-                  <span>{dateFns(new Date(tv.first_air_date))}</span>
+                  <span>{formatDate(tv.first_air_date)}</span>
                 </div>
               )}
               {tv.number_of_seasons && (

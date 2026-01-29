@@ -70,6 +70,9 @@ async function fetchWithTimeout(url: string, options?: RequestInit): Promise<Res
 
 async function fetchTMDB<T>(endpoint: string, params?: Record<string, string>): Promise<T> {
   return queueRequest(async () => {
+    if (!TMDB_API_KEY) {
+      throw new Error('TMDB API key not configured')
+    }
     const url = new URL(`${TMDB_BASE_URL}${endpoint}`)
     url.searchParams.append('api_key', TMDB_API_KEY)
 
